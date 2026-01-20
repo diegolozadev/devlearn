@@ -8,7 +8,7 @@ class Course(models.Model):
     slug = models.SlugField(unique=True)
     overview = models.TextField()
     created_at = models.DateField(auto_now_add=True)
-    categories = models.ManyToManyField(Category, related_name='courses')
+    categories = models.ManyToManyField(Category, through='CourseCategory', related_name='courses')
 
     class Meta:
         ordering = ['-created_at']
@@ -25,4 +25,4 @@ class CourseCategory(models.Model):
         unique_together = ('course', 'category')
 
     def __str__(self):
-        return f"{self.course} - {self.category}"        
+        return f"{self.course} - {self.category}"
