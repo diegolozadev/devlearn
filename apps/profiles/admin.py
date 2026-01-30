@@ -14,5 +14,5 @@ class UserAdmin(BaseUserAdmin):
 
 @admin.register(InstructorProfile)
 class InstructorProfileAdmin(admin.ModelAdmin):
-    list_display = ('user', 'bio', 'website')
+    list_display = ('id', 'user', 'bio', 'website')
     search_fields = ('user__username', 'bio')
