@@ -562,6 +562,12 @@ a.btn {
     background-color: #666;
 }
 
+.paginator-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+
 @media (max-width: 768px) {
     .layout {
         flex-direction: column;
@@ -621,3 +627,5 @@ a.btn {
         scroll-snap-align: start;
     }
 }
+
+
