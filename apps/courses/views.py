@@ -40,12 +40,14 @@ def course_detail(request, slug):
 
     course = get_object_or_404(Course, slug=slug)
     modules = course.modules.prefetch_related('contents')
+    total_contents = sum(module.contents.count() for module in modules)
 
 
 
     return render(request, 'courses/course_detail.html',{
         'course': course,
-        'modules': modules
+        'modules': modules,
+        'total_contents': total_contents
     })
 
 
@@ -56,45 +58,12 @@ def course_detail(request, slug):
 
 
 
-def course_lessons(request):
-    lesson = {
-        'course_title': 'Django Aplicaciones',
-        'course_progress': 30,
-        'course_content':[
-            {
-                'id': 1,
-                'name': 'Introducción al curso',
-                'total_lessons': 6,
-                'complete_lessons': 3,
-                'lessons': [
-                    {
-                        'name': '¿Que aprenderás en el curso?',
-                        'type': 'video'
-                    },
-                    {
-                        'name': '¿Como usar la plataforma?',
-                        'type': 'article'
-                    },
-                ]
-            },
-            {
-                'id': 2,
-                'name': 'Django principios',
-                'total_lessons': 12,
-                'complete_lessons': 2,
-                'lessons': [
-                    {
-                        'name': '¿Que aprenderás en el curso?',
-                        'type': 'video'
-                    },
-                    {
-                        'name': '¿Como usar la plataforma?',
-                        'type': 'article'
-                    },
-                ]
-            },
-        ]  
-    }
+def course_lessons(request, slug):
+    course = get_object_or_404(Course, slug=slug)
+    course_title = course.title
+    modules = course.modules.prefetch_related('contents')
+
     return render(request, 'courses/course_lessons.html', {
-        'lesson': lesson
+        'course_title': course_title,
+        'modules': modules
     })
